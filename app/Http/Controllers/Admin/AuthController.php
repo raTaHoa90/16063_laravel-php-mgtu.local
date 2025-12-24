@@ -12,9 +12,7 @@ class AuthController extends BaseController {
         if($user === null)
             return redirect('/admin/auth');
         else
-            return view('admin.main', [
-                'user' => $user
-            ]);
+            return view('admin.main');
     }
 
     function authPage(){
