@@ -13,7 +13,14 @@ class AdminMenu extends BaseMenu {
 
         $this->AddMenu('Профиль')->icon('fa-user-o')->link('/admin/profile')->id('profile');
         $this->AddMenu('Пользователи')->icon('fa-users')->link('/admin/users')->id('users');
-        $this->AddMenu('Товары')->icon('fa-archive')->link('/admin/articles')->id('articles');
+
+        //->link('/admin/articles')
+        $subMenuProject = $this->AddMenu('Товары')->icon('fa-archive')->id('articles')
+            ->createSubMenu();
+
+        $subMenuProject->AddMenu('Списки значений')->link('/admin/products/types')->id('a_types');
+        $subMenuProject->AddMenu('Списки товаров')->link('/admin/products/table')->id('a_products');
+
         $this->AddMenu('Заказы')->icon('fa-shopping-cart')->link('admin/orders')->id('orders');
 
         $this->AddMenu('Выход')->icon('fa-sign-out')->link('admin/logout');

@@ -13,7 +13,7 @@ class ParamList extends Model
 
         TYPES = [
             self::TYPE_TEXT_LIST  => 'Текстовый список',
-            self::TYPE_COLOR_LIST => 'Список цветов',
+            self::TYPE_COLOR_LIST => 'Цветовой список',
             self::TYPE_IMAGE_LIST => 'Список картинок'
         ];
 
@@ -23,11 +23,11 @@ class ParamList extends Model
     ];
 
     function values(){
-        return ParamListValue::Where('list_id', $this->id)->get();
+        return ParamListValue::Where('list_id', $this->id)->orderBy('id')->get();
     }
 
-    function addValue(string $value){
-        ParamListValue::create([
+    function addValue(string $value): ParamListValue {
+        return ParamListValue::create([
             'list_id' => $this->id,
             'value' => $value
         ]);
@@ -38,5 +38,16 @@ class ParamList extends Model
             'list_id' => $this->id,
             'value' => $value
         ])->delete();
+    }
+
+    function type(){
+        return static::TYPES[$this->type_values] ?? '???';
+    }
+
+    function hasUsed(){
+        $count = ProductParam::where('list_id', $this->id)
+            ->whereIn('type_param', ProductParam::TYPES_OF_LIST)
+            ->count();
+        return $count > 0;
     }
 }

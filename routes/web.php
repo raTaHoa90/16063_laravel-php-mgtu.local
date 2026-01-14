@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\ProductsTypesController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,23 @@ Route::group(['prefix'=>'/admin'], function(){
         Route::post('/login', 'login');
         Route::get('/logout', 'logout');
     });
+
+    Route::controller(ProductsTypesController::class)->group(function(){
+        Route::get('/products/types', 'table');
+        Route::get('/products/types/{paramList}', 'listValues');
+
+        Route::post('/products/types/{paramList}/add', 'listValueAdd');
+        Route::post('/products/types/{paramList}/update', 'listValueUpdate');
+        Route::post('/products/types/{paramList}/delete', 'listValueDelete');
+
+
+
+
+        Route::post('/products/types/delete', 'delete');
+        Route::post('/products/types/create', 'create');
+        Route::post('/products/types/rename', 'rename');
+    });
+    // /articles/types
 
     Route::controller(UsersController::class)->group(function(){
         Route::get('/users', 'table');

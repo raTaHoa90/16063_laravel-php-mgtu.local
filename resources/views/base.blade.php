@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="/css/base-styles.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <title>Document</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script>
+        $(_=> $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } }) );
+    </script>
     @stack('head')
 </head>
 <body>

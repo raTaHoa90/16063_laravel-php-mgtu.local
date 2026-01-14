@@ -11,20 +11,20 @@
 
 @section('content')
     <dialog id="addUserDlg" closedby="any">
-        <form id="adduser" onsubmit="sendNewUser(); return false">
+        <form id="adduser" onsubmit="sendNewUser(); return false;">
             @csrf
             <table>
                 <tr>
                     <td>Email</td>
-                    <td><input name="email" type="email" autocomplete="off"> </td>
+                    <td><input class="form-control" name="email" type="email" autocomplete="off"> </td>
                 </tr>
                 <tr>
                     <td>Имя</td>
-                    <td><input name="name" autocomplete="off"></td>
+                    <td><input class="form-control" name="name" autocomplete="off"></td>
                 </tr>
                 <tr>
                     <td>Роль пользователя</td>
-                    <td><select name="role">
+                    <td><select class="form-control" name="role">
                     @foreach ($roles as $roleID => $caption)
                         <option value="{{$roleID}}">{{$caption}}</option>
                     @endforeach
@@ -32,7 +32,7 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td><input type="submit" value="Создать пользователя"></td>
+                    <td><input class="btn bnt-success" type="submit" value="Создать пользователя"></td>
                 </tr>
             </table>
         </form>

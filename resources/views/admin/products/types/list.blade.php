@@ -1,0 +1,39 @@
+@extends('admin.base_template')
+
+@push('head')
+    <script src="/js/admin/productListValue.js"></script>
+    <script>
+        idList = {{$list->id}};
+    </script>
+    <style>
+        a{cursor: pointer}
+    </style>
+@endpush
+
+@section('content')
+    <a href="/admin/products/types" class="btn btn-light"><i class="fa fa-arrow-left"></i> Назад к таблице списков</a><br><br>
+
+    <table class='r-t'>
+        <tr>
+            <td>Название листа:</td>
+            <td>{{ $list->caption }}</td>
+        </tr>
+        <tr>
+            <td>Тип листа:</td>
+            <td>{{ $list->type() }}</td>
+        </tr>
+    </table>
+
+    <section>
+        <h3>Список значений</h3>
+        <button class="btn btn-success" onclick="addListValue()"><i class="fa fa-calendar-plus-o"></i></button>
+        <ul id="listUL">
+            @foreach ($list->values() as $valueItem)
+            <li id="value{{$valueItem->id}}">#{{$valueItem->id}} <span>{{$valueItem->value}}</span>
+                <a class="link-primary" onclick="editListValue({{$valueItem->id}})"><i class="fa fa-pencil"></i></a>
+                <a class="link-danger" onclick="deleteListValue({{$valueItem->id}})"><i class="fa fa-trash-o"></i></a>
+            </li>
+            @endforeach
+        </ul>
+    </section>
+@endsection

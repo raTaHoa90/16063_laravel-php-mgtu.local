@@ -2,8 +2,6 @@
 
 namespace App\Http\Menu;
 
-use Traversable;
-
 class BaseMenu implements \IteratorAggregate {
     protected array $_menuItems = [];
     public string $active = '';
@@ -14,12 +12,18 @@ class BaseMenu implements \IteratorAggregate {
         return $result->caption($caption);
     }
 
-    function getIterator(): Traversable {
+    function getIterator(): \Traversable {
         return new \ArrayIterator($this->_menuItems);
     }
 
     function isActive(MenuItem $item){
-        return $this->active == $item->id;
+        return $item->isActive($this->active);
+    }
+
+    function isActiveByID(string $active){
+        foreach($this->_menuItems as $item)
+            if($item->isActive($active))
+                return true;
     }
 }
 
