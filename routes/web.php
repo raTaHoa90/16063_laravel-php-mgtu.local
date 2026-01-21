@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\ProductsTypesController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\MainController;
@@ -24,13 +26,25 @@ Route::group(['prefix'=>'/admin'], function(){
         Route::post('/products/types/{paramList}/update', 'listValueUpdate');
         Route::post('/products/types/{paramList}/delete', 'listValueDelete');
 
-
-
-
         Route::post('/products/types/delete', 'delete');
         Route::post('/products/types/create', 'create');
         Route::post('/products/types/rename', 'rename');
     });
+
+    Route::controller(ProductsController::class)->group(function(){
+        Route::get('/products/table', 'table');
+        Route::get('/products/create', 'createPage');
+
+    });
+
+    Route::controller(CategoriesController::class)->group(function(){
+        Route::get('/products/categories', 'table');
+
+        Route::post('/products/categories/create', 'create');
+        Route::post('/products/categories/update', 'update');
+        Route::post('/products/categories/delete', 'delete');
+    });
+
     // /articles/types
 
     Route::controller(UsersController::class)->group(function(){

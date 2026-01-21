@@ -3,8 +3,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\ParamList;
 use App\Models\ParamListValue;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Js;
 
 class ProductsTypesController extends BaseController {
     function table(){

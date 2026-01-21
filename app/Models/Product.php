@@ -36,6 +36,8 @@ class Product extends Model {
     }
 
     function params(){
+        if(!$this->id) return [];
+
         if($this->_params === null){
             $params = ProductParam::where('product_id', $this->id)->get();
             $this->_params = [];

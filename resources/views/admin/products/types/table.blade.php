@@ -37,6 +37,7 @@
                     <th>#</th>
                     <th>Имя</th>
                     <th>Тип листа</th>
+                    <th>Размер списка</th>
                     <th>
                         <i class="fa fa-cog"></i>
                         <button class="btn btn-success" style="float:right" onclick="openTypeEditDlg()"><i class="fa fa-calendar-plus-o"></i></button>
@@ -49,6 +50,7 @@
                     <td>{{ $list->id }}</td>
                     <td>{{ $list->caption }}</td>
                     <td>{{ $list->type() }}</td>
+                    <td width=130 style="text-align: right">{{ $list->countValues() }}</td>
                     <td style="text-align:right">
                         @if(!$list->hasUsed())
                         <a class="btn btn-danger" onclick="deleteList({{$list->id}}); return cancel(event)"><i class="fa fa-trash-o"></i></a>

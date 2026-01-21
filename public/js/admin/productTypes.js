@@ -38,35 +38,15 @@ function sendType(){
         }
     }
 
-    $.ajax({
-        type: 'POST',
-        url: url ,
-        cache: false,
-        contentType: false,
-        processData: false,
-        data: formData,
-        dataType: 'json',
-        success: req => {
-            console.log(req);
-            if(req.error){
-                //this.addError(req.error);
-                alert(req.error);
-                return;
-            }
-            location.reload();
-        }
-    });
-    $('#typeEditDlg')[0].close();
+    ajaxPostForm(url, formData, '#typeEditDlg');
 }
 
 
 function deleteList(idList){
     $.post('/admin/products/types/delete', {idList} , function(req){
-        if(req.error){
-            //this.addError(req.error);
-            alert(req.error);
-            return;
-        }else if(req.ok)
+        if(addError(req.error)) return;
+
+        if(req.ok)
             $('#list'+idList).remove();
 
     }, 'json');

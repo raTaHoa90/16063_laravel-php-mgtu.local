@@ -26,6 +26,10 @@ class ParamList extends Model
         return ParamListValue::Where('list_id', $this->id)->orderBy('id')->get();
     }
 
+    function countValues(): int{
+        return ParamListValue::Where('list_id', $this->id)->count();
+    }
+
     function addValue(string $value): ParamListValue {
         return ParamListValue::create([
             'list_id' => $this->id,
@@ -49,5 +53,13 @@ class ParamList extends Model
             ->whereIn('type_param', ProductParam::TYPES_OF_LIST)
             ->count();
         return $count > 0;
+    }
+
+    function hasColorList(): bool {
+        return $this->type_values == static::TYPE_COLOR_LIST;
+    }
+
+    function hasImageList(): bool {
+        return $this->type_values == static::TYPE_IMAGE_LIST;
     }
 }

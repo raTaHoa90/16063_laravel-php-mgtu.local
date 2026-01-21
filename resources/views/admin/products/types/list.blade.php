@@ -4,9 +4,16 @@
     <script src="/js/admin/productListValue.js"></script>
     <script>
         idList = {{$list->id}};
+        hasListColor = {{$list->hasColorList()}};
+        hasListImage = {{$list->hasImageList()}};
     </script>
     <style>
         a{cursor: pointer}
+        .color-box {
+            width: 20px;
+            height: 20px;
+            border: 1px black solid;
+        }
     </style>
 @endpush
 
@@ -32,6 +39,12 @@
             <li id="value{{$valueItem->id}}">#{{$valueItem->id}} <span>{{$valueItem->value}}</span>
                 <a class="link-primary" onclick="editListValue({{$valueItem->id}})"><i class="fa fa-pencil"></i></a>
                 <a class="link-danger" onclick="deleteListValue({{$valueItem->id}})"><i class="fa fa-trash-o"></i></a>
+                @if($list->hasColorList())
+                    <div class="color-box" style="background-color: {{$valueItem->value}}"></div>
+                @endif
+                @if($list->hasImageList())
+                    <img class="color-box" src="{{$valueItem->value}}">
+                @endif
             </li>
             @endforeach
         </ul>

@@ -19,6 +19,7 @@ class AdminMenu extends BaseMenu {
             ->createSubMenu();
 
         $subMenuProject->AddMenu('Списки значений')->link('/admin/products/types')->id('a_types');
+        $subMenuProject->AddMenu('Категории')->link('/admin/products/categories')->id('a_categories');
         $subMenuProject->AddMenu('Списки товаров')->link('/admin/products/table')->id('a_products');
 
         $this->AddMenu('Заказы')->icon('fa-shopping-cart')->link('admin/orders')->id('orders');
