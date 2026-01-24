@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model {
     use SoftDeletes;
@@ -29,10 +30,32 @@ class Product extends Model {
         'category_id' // ссылка на категорию в которой располагается товар
     ];
 
+    function getStatus(): string{
+        return static::STATUS[$this->status] ?? '';
+    }
+
     function category(): ?Category {
         if($this->category_id == 0)
             return null;
         return Category::find($this->category_id);
+    }
+
+    function firstImage(): string {
+        $imgs = $this->images();
+        return $imgs[0] ?? '';
+    }
+
+    function categoryName(): string {
+        $cat = $this->category();
+        return $cat ? $cat->caption : '';
+    }
+
+    function images(){
+        $path = 'product_'.$this->id;
+        if(!Storage::directoryExists($path))
+            return collect();
+
+        return Storage::allFiles($path);
     }
 
     function params(){
@@ -47,7 +70,7 @@ class Product extends Model {
         return $this->_params;
     }
 
-    function addParam(string $caption, int $type, $listID = 0){
+    function addParam(string $caption, int $type, $listID = 0): ProductParam{
         $params = $this->params();
         $param = $params[$caption] ?? null;
         if($param === null) {
@@ -59,7 +82,7 @@ class Product extends Model {
                 'value' => ''
             ]);
             $this->_params[$caption] = $param;
-            return;
+            return $param;
         }
 
         // если указанная характеристика у товара уже есть
@@ -68,6 +91,7 @@ class Product extends Model {
             'list_id' => $listID,
             'value' => ''
         ])->save();
+        return $param;
     }
 
     function setParam(string $caption, string $value){
